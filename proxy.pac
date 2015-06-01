@@ -4717,6 +4717,15 @@ for (var i = 0; i < rules.length; i++) {
 }
 
 function FindProxyForURL(url, host) {
+      // 百度
+    if (host.indexOf('baidu.com') != -1 && /^https?:\/\/[\w\.]+\/crossdomain\.xml/i.test(url)) {
+        return direct;
+    }
+    // 优酷过滤广告
+    if (/^https?:\/\/[\w\.]+\/crossdomain\.xml/i.test(url) && host.indexOf('youku.com') != -1) {
+        return "PROXY yk.pp.navi.youku.com:80";
+    }
+
     if (defaultMatcher.matchesAny(url, host) instanceof BlockingFilter) {
         return proxy;
     }
